@@ -205,15 +205,17 @@ export default function PaperGenerator({ onGenerate, language = 'en' }) {
         const sas = questions.filter(q => q.marks === 2 || q.type === 'short_answer');
         const las = questions.filter(q => q.marks >= 3 || q.type === 'long_answer');
         
-        // Pad them out to exact lengths
         for(let i=0; i<20; i++) {
-          selectedQuestions.push({...mcqs[i % Math.max(mcqs.length, 1)], id: `off_mcq_${i}_${Date.now()}`});
+          const baseQ = mcqs.length > 0 ? mcqs[i % mcqs.length] : questions[i % questions.length];
+          selectedQuestions.push({...baseQ, id: `off_mcq_${i}_${Date.now()}`});
         }
         for(let i=0; i<15; i++) {
-          selectedQuestions.push({...sas[i % Math.max(sas.length, 1)], id: `off_sa_${i}_${Date.now()}`});
+          const baseQ = sas.length > 0 ? sas[i % sas.length] : questions[i % questions.length];
+          selectedQuestions.push({...baseQ, id: `off_sa_${i}_${Date.now()}`});
         }
         for(let i=0; i<8; i++) {
-          selectedQuestions.push({...las[i % Math.max(las.length, 1)], id: `off_la_${i}_${Date.now()}`});
+          const baseQ = las.length > 0 ? las[i % las.length] : questions[i % questions.length];
+          selectedQuestions.push({...baseQ, id: `off_la_${i}_${Date.now()}`});
         }
         
         const confidenceScore = calculateConfidenceScore(questions, history) || 72;
@@ -254,13 +256,16 @@ export default function PaperGenerator({ onGenerate, language = 'en' }) {
         const las = questions.filter(q => q.marks >= 3 || q.type === 'long_answer');
         
         for(let i=0; i<20; i++) {
-          selectedQuestions.push({...mcqs[i % Math.max(mcqs.length, 1)], id: `fall_mcq_${i}_${Date.now()}`});
+          const baseQ = mcqs.length > 0 ? mcqs[i % mcqs.length] : questions[i % questions.length];
+          selectedQuestions.push({...baseQ, id: `fall_mcq_${i}_${Date.now()}`});
         }
         for(let i=0; i<15; i++) {
-          selectedQuestions.push({...sas[i % Math.max(sas.length, 1)], id: `fall_sa_${i}_${Date.now()}`});
+          const baseQ = sas.length > 0 ? sas[i % sas.length] : questions[i % questions.length];
+          selectedQuestions.push({...baseQ, id: `fall_sa_${i}_${Date.now()}`});
         }
         for(let i=0; i<8; i++) {
-          selectedQuestions.push({...las[i % Math.max(las.length, 1)], id: `fall_la_${i}_${Date.now()}`});
+          const baseQ = las.length > 0 ? las[i % las.length] : questions[i % questions.length];
+          selectedQuestions.push({...baseQ, id: `fall_la_${i}_${Date.now()}`});
         }
 
         const confidenceScore = 65; // Lower confidence for fallback
