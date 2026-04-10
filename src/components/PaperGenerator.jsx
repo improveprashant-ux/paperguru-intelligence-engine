@@ -218,17 +218,17 @@ export default function PaperGenerator({ onGenerate, language = 'en' }) {
         
         const confidenceScore = calculateConfidenceScore(questions, history) || 72;
         
-        paperData = {
+        const paperDataLocal = {
           id: `CBSE-${config.subject}-2027-${Date.now()}`,
           subject: config.subject,
           subjectName: getSubjectName(config.subject),
           year: 2027,
           generatedAt: new Date().toISOString(),
           questions: selectedQuestions,
-          rules: rules,
+          rules: generatePaperRules(80),
           confidenceScore: confidenceScore,
-          gapAnalysis: gapAnalysis,
-          highEntropyTopics: highEntropy.slice(0, 5),
+          gapAnalysis: analyzeGaps(questions, history),
+          highEntropyTopics: identifyHighEntropyTopics(questions, history).slice(0, 5),
           config: {
             blackSwan: config.blackSwanEnabled,
             competencyBased: config.competencyBasedEnabled,
@@ -272,10 +272,10 @@ export default function PaperGenerator({ onGenerate, language = 'en' }) {
           year: 2027,
           generatedAt: new Date().toISOString(),
           questions: selectedQuestions,
-          rules: rules,
+          rules: generatePaperRules(80),
           confidenceScore: confidenceScore,
-          gapAnalysis: gapAnalysis,
-          highEntropyTopics: highEntropy.slice(0, 5),
+          gapAnalysis: [],
+          highEntropyTopics: [],
           config: {
             blackSwan: config.blackSwanEnabled,
             competencyBased: config.competencyBasedEnabled,
